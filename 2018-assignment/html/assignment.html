@@ -1,0 +1,433 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>2018 - Introduction to Matlab Programming</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-11-25"><meta name="DC.source" content="assignment.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>2018 - Introduction to Matlab Programming</h1><!--introduction--><p>Assignment</p><p>2018-11, set by Denis Schluppeck</p><p>2018-11-25, completed by Rohan Sopp</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Summary</a></li><li><a href="#2">Load fMRI data</a></li><li><a href="#3">Display fMRI data</a></li><li><a href="#4">Write some helper functions:</a></li><li><a href="#5">Display slice 10 (axial/horizontal view) of each of the follwing</a></li><li><a href="#6">Find the voxel with the highest tSNR value</a></li><li><a href="#7">Plot the timecourses at two voxels from the data set</a></li><li><a href="#8">Note...</a></li></ul></div><h2 id="1">Summary</h2><p>Provide a short abstract (&lt;250w) of</p><pre class="codeinput"><span class="comment">% to produce a script that runs through a particular set of analysis steps</span>
+<span class="comment">% and displays the results</span>
+
+<span class="comment">% basically talk through the steps.</span>
+</pre><h2 id="2">Load fMRI data</h2><pre class="codeinput">data = niftiread(<span class="string">'dafni_test.nii'</span>);
+
+niftiinfo(<span class="string">'dafni_test.nii'</span>)
+</pre><pre class="codeoutput">
+ans = 
+
+  struct with fields:
+
+                 Filename: '/Users/rohansopp/Documents/MATLAB/2018-assignment/dafni_test.nii'
+              Filemoddate: '11-Nov-2018 19:30:03'
+                 Filesize: 62914912
+              Description: '5.0.10'
+                ImageSize: [64 64 24 160]
+          PixelDimensions: [3 3 3 1.5000]
+                 Datatype: 'single'
+             BitsPerPixel: 32
+               SpaceUnits: 'Millimeter'
+                TimeUnits: 'Second'
+           AdditiveOffset: 0
+    MultiplicativeScaling: 1
+               TimeOffset: 0
+                SliceCode: 'Unknown'
+       FrequencyDimension: 0
+           PhaseDimension: 0
+         SpatialDimension: 0
+    DisplayIntensityRange: [0 0]
+            TransformName: 'Sform'
+                Transform: [1&times;1 affine3d]
+                  Qfactor: -1
+                      raw: [1&times;1 struct]
+
+</pre><h2 id="3">Display fMRI data</h2><p>. Using the fixed version of arrayview.m, display the 4d (turned 3d) data . Made changes to returnSlice.m (see updated version returnSlice1.m)</p><pre class="codeinput">arrayview(data)
+</pre><pre class="codeoutput">==============================================
+	arrayview() program - 2018 assignment
+
+
+	Press the following buttons to:
+up/down	change slice
+o/O		change orientation
+c/C		change cursor
+q/Esc		quit
+==============================================
+h2: data set is 4d - take the mean
+h2: suitable input array for returnSlice1
+
+ans = 
+
+  Figure (1: arrayview() - 2018 assignment) with properties:
+
+      Number: 1
+        Name: 'arrayview() - 2018 assignment'
+       Color: [0.9400 0.9400 0.9400]
+    Position: [440 378 560 420]
+       Units: 'pixels'
+
+  Use GET to show all properties
+
+</pre><img vspace="5" hspace="5" src="assignment_01.png" alt=""> <h2 id="4">Write some helper functions:</h2><pre class="codeinput"><span class="comment">% 1. a function that takes a 4d array of data and returns the mean across</span>
+<span class="comment">%    time. You should be able to use is e.g. like this:</span>
+
+          m = calculateMeanAcrossTime(data);
+
+<span class="comment">% 2. a function that takes a 4d array of data and returns the standard</span>
+<span class="comment">%    deviation across time. --&gt; look at the matlab function std()</span>
+<span class="comment">%</span>
+          s = calculateMeanStdAcrossTime(data);
+
+<span class="comment">% 3. a function that takes a 4d array of data and returns the temporal</span>
+<span class="comment">%    signal to noise ratio, where</span>
+
+          tSNR = calculateTSnr(data);
+</pre><h2 id="5">Display slice 10 (axial/horizontal view) of each of the follwing</h2><p>a) the mean, b) std, and c) tsnr image</p><p>. using imagesc(), colorbar, and colormap(gray). You can display them in 3       separate figure windows or use subplot() to create panels</p><pre class="codeinput"><span class="comment">% 3 is the axial orientation</span>
+<span class="comment">% slice number 10</span>
+
+<span class="comment">% m = Mean</span>
+<span class="comment">% s = Standard Deviation</span>
+<span class="comment">% tSNR = Temporal Signal to Noise Ratio</span>
+
+
+meanSlice = returnSlice(m,10,3);
+figure(1)
+subplot(2,2,1), imagesc(meanSlice)
+c = colorbar;
+c.Label.String = <span class="string">'Image Intensity (au)'</span>;
+colormap(gray);
+title(<span class="string">'meanSlice'</span>)
+
+stdSlice = returnSlice(s,10,3);
+subplot(2,2,2), imagesc(stdSlice)
+c = colorbar;
+c.Label.String = <span class="string">'Image Intensity (au)'</span>;
+colormap(gray)
+title(<span class="string">'stdSlice'</span>)
+
+tSNRSlice = returnSlice(tSNR,10,3);
+subplot(2,2,3), imagesc(tSNRSlice)
+c = colorbar;
+c.Label.String = <span class="string">'Image Intensity (au)'</span>;
+colormap(gray)
+title(<span class="string">'tSNRslice'</span>)
+
+
+<span class="comment">% . chosen subplot(2,2,...) because I felt it was more aesthetic than subplot(3,1,...)</span>
+<span class="comment">% . https://uk.mathworks.com/help/matlab/ref/colorbar.html</span>
+
+<span class="comment">% . For the tSNR image intensity, the larger values are the result of a</span>
+<span class="comment">%       larger mean and a smaller standard deviation (or at least the difference between them)</span>
+
+<span class="comment">% . the smaller values therefore correspond to a smaller difference between</span>
+<span class="comment">%       the mean and the standard deviation(i.e. more deviation), suggesting that these voxels were more noisey</span>
+</pre><img vspace="5" hspace="5" src="assignment_02.png" alt=""> <h2 id="6">Find the voxel with the highest tSNR value</h2><p>. Report the location of the voxel with the highest tSNR and its value</p><p>https://uk.mathworks.com/matlabcentral/answers/63247-get-max-value-and-index-of-multidimensional-array</p><p>. Both linear index and [x,y,z] notation are acceptable as solutions.</p><pre class="codeinput"><span class="comment">% .  Idx is the index of tSNR(:) containing the largest tSNR value.</span>
+<span class="comment">% .  M is the value of the voxel with the largest tSNR value</span>
+
+[M, Idx] = max(tSNR(:))
+
+<span class="comment">% .  ind2sub function extracts the x, y and z indices of tSNR...</span>
+<span class="comment">%          corresponding to the largest element</span>
+
+[Ix, Iy, Iz] = ind2sub(size(tSNR),Idx)
+
+<span class="comment">% . Ix: the index position on the x axis that contains the largest element</span>
+<span class="comment">% . Iy: the index position on the y axis that contains the largest element</span>
+<span class="comment">% . Ix: the index position on the z axis that contains the largest element</span>
+<span class="comment">%      --&gt; Coordinates for the voxel with the highest tSNR value</span>
+
+<span class="comment">% tSNR(Ix, Iy, Iz):</span>
+<span class="comment">%      --&gt; shows you the value of the voxel at the specified coordinates</span>
+<span class="comment">%      --&gt; as does M</span>
+</pre><pre class="codeoutput">
+M =
+
+  single
+
+  187.3587
+
+
+Idx =
+
+       91957
+
+
+Ix =
+
+    53
+
+
+Iy =
+
+    29
+
+
+Iz =
+
+    23
+
+</pre><h2 id="7">Plot the timecourses at two voxels from the data set</h2><p>. Plot the fMRI response at the two locations. In the same plot.       the values on the x-axis should go 0 .. 1.5 .. 3.0 .. 238.5</p><pre class="codeinput">x = 0:10:160;
+<span class="comment">% . Chose to plot the x axis in increments of 10 rather than 1.5 mainly due to the aesthetic of the graphic and that for each x</span>
+<span class="comment">%       there is still a correspondance to y</span>
+
+
+<span class="comment">% [18, 14, 4]</span>
+<span class="comment">% [40, 19, 3]</span>
+
+<span class="comment">% x = fmri response</span>
+<span class="comment">% y = time (TR)</span>
+
+voxel1 = returnTimecourse(data, 18, 14, 4);
+figure(2)
+plot(voxel1, <span class="string">'k'</span>, <span class="string">'linewidth'</span>, 2)
+xlim([0 160])
+ylim([1000 1600])
+xticks(x)
+xlabel(<span class="string">'Time (TR)'</span>)
+ylabel(<span class="string">'fMRI response'</span>)
+hold <span class="string">on</span>
+
+voxel2 = returnTimecourse(data, 40, 19, 3);
+plot(voxel2, <span class="string">'r'</span>, <span class="string">'linewidth'</span>, 2)
+
+legend({<span class="string">'Voxel_1'</span>, <span class="string">'Voxel_2'</span>},<span class="string">'Location'</span>,<span class="string">'northwest'</span>,<span class="string">'NumColumns'</span>,2)
+</pre><img vspace="5" hspace="5" src="assignment_03.png" alt=""> <h2 id="8">Note...</h2><p>error checking for inputs, other kinds of "defensive programming" that I talked about (maybe anticipating errors that might commonly occur) small snippets of code that show / prove that functions perform in expected way, maybe showing more than one version of a solution</p><p>If you find solutions / hints to different aspects of this problem set with google searches and / or on stackoverflow and matlab documentation, this is completely acceptable - just make sure you don't copy code verbatim, but use your own variable names and comments.</p><p>Provide links / a reference to those pages, please.</p><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% 2018 - Introduction to Matlab Programming 
+% Assignment
+%
+% 2018-11, set by Denis Schluppeck
+%
+% 2018-11-25, completed by Rohan Sopp
+
+%% Summary
+%
+% Provide a short abstract (<250w) of
+
+% to produce a script that runs through a particular set of analysis steps
+% and displays the results
+
+% basically talk through the steps.
+
+
+%% Load fMRI data
+
+
+data = niftiread('dafni_test.nii');
+
+niftiinfo('dafni_test.nii')
+
+
+%% Display fMRI data
+% . Using the fixed version of arrayview.m, display the 4d (turned 3d) data
+% . Made changes to returnSlice.m (see updated version returnSlice1.m)
+ 
+
+arrayview(data)
+
+
+
+%% Write some helper functions:
+
+% 1. a function that takes a 4d array of data and returns the mean across
+%    time. You should be able to use is e.g. like this:
+
+          m = calculateMeanAcrossTime(data);
+
+% 2. a function that takes a 4d array of data and returns the standard
+%    deviation across time. REPLACE_WITH_DASH_DASH> look at the matlab function std()
+%
+          s = calculateMeanStdAcrossTime(data);
+
+% 3. a function that takes a 4d array of data and returns the temporal
+%    signal to noise ratio, where   
+                       
+          tSNR = calculateTSnr(data);
+          
+
+%% Display slice 10 (axial/horizontal view) of each of the follwing
+%
+% a) the mean, 
+% b) std, and 
+% c) tsnr image 
+%
+% . using imagesc(), colorbar, and colormap(gray). You can display them in 3
+%       separate figure windows or use subplot() to create panels
+
+% 3 is the axial orientation
+% slice number 10
+
+% m = Mean 
+% s = Standard Deviation 
+% tSNR = Temporal Signal to Noise Ratio
+
+
+meanSlice = returnSlice(m,10,3); 
+figure(1)
+subplot(2,2,1), imagesc(meanSlice)
+c = colorbar;
+c.Label.String = 'Image Intensity (au)';
+colormap(gray);
+title('meanSlice')
+
+stdSlice = returnSlice(s,10,3);
+subplot(2,2,2), imagesc(stdSlice)
+c = colorbar;
+c.Label.String = 'Image Intensity (au)';
+colormap(gray)
+title('stdSlice')
+
+tSNRSlice = returnSlice(tSNR,10,3);
+subplot(2,2,3), imagesc(tSNRSlice)
+c = colorbar;
+c.Label.String = 'Image Intensity (au)';
+colormap(gray)
+title('tSNRslice')
+
+
+% . chosen subplot(2,2,...) because I felt it was more aesthetic than subplot(3,1,...)
+% . https://uk.mathworks.com/help/matlab/ref/colorbar.html
+
+% . For the tSNR image intensity, the larger values are the result of a
+%       larger mean and a smaller standard deviation (or at least the difference between them)
+
+% . the smaller values therefore correspond to a smaller difference between
+%       the mean and the standard deviation(i.e. more deviation), suggesting that these voxels were more noisey
+
+%% Find the voxel with the highest tSNR value
+%
+% . Report the location of the voxel with the highest tSNR and its value
+% 
+% https://uk.mathworks.com/matlabcentral/answers/63247-get-max-value-and-index-of-multidimensional-array
+%
+% . Both linear index and [x,y,z] notation are acceptable as solutions.
+% 
+
+% .  Idx is the index of tSNR(:) containing the largest tSNR value.
+% .  M is the value of the voxel with the largest tSNR value
+
+[M, Idx] = max(tSNR(:))
+
+% .  ind2sub function extracts the x, y and z indices of tSNR...
+%          corresponding to the largest element
+
+[Ix, Iy, Iz] = ind2sub(size(tSNR),Idx)
+
+% . Ix: the index position on the x axis that contains the largest element
+% . Iy: the index position on the y axis that contains the largest element
+% . Ix: the index position on the z axis that contains the largest element
+%      REPLACE_WITH_DASH_DASH> Coordinates for the voxel with the highest tSNR value
+
+% tSNR(Ix, Iy, Iz):
+%      REPLACE_WITH_DASH_DASH> shows you the value of the voxel at the specified coordinates
+%      REPLACE_WITH_DASH_DASH> as does M
+
+%% Plot the timecourses at two voxels from the data set
+%
+% . Plot the fMRI response at the two locations. In the same plot.
+%       the values on the x-axis should go 0 .. 1.5 .. 3.0 .. 238.5
+
+x = 0:10:160;
+% . Chose to plot the x axis in increments of 10 rather than 1.5 mainly due to the aesthetic of the graphic and that for each x
+%       there is still a correspondance to y
+
+
+% [18, 14, 4]
+% [40, 19, 3]
+
+% x = fmri response
+% y = time (TR)
+
+voxel1 = returnTimecourse(data, 18, 14, 4);
+figure(2)
+plot(voxel1, 'k', 'linewidth', 2)
+xlim([0 160])
+ylim([1000 1600])
+xticks(x)
+xlabel('Time (TR)')
+ylabel('fMRI response')
+hold on
+
+voxel2 = returnTimecourse(data, 40, 19, 3);
+plot(voxel2, 'r', 'linewidth', 2)
+
+legend({'Voxel_1', 'Voxel_2'},'Location','northwest','NumColumns',2)
+
+
+%% Note...
+%
+% error checking for inputs, other kinds of "defensive programming" 
+% that I talked about (maybe anticipating errors that might commonly occur)
+% small snippets of code that show / prove that functions perform 
+% in expected way, maybe showing more than one version of a solution
+%
+% If you find solutions / hints to different aspects of this problem set 
+% with google searches and / or on stackoverflow and matlab documentation, 
+% this is completely acceptable - just make sure you don't copy code
+% verbatim, but use your own variable names and comments.
+%
+% Provide links / a reference to those pages, please.
+%
+
+
+##### SOURCE END #####
+--></body></html>
